@@ -96,7 +96,7 @@ while not game_close:
             game_over = True
         # Eat Food
         if x == food_x and y == food_y:
-            snakeLength += 1
+            snakeLength += random.randint(2, 5)
             while True:
                 food_x, food_y = random.randrange(0, width, snakeUnit), random.randrange(0, height, snakeUnit)
                 if [food_x, food_y] not in snake and food_x != x and food_y != y:
