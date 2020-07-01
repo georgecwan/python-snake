@@ -6,7 +6,6 @@ import os
 # Dimensions
 width, height = 900, 600
 snakeUnit = 15
-gameSpeed = 20
 
 # Initialize game
 pygame.init()
