@@ -1,5 +1,7 @@
 import pygame
 import random
+import json
+import os
 
 # Dimensions
 width, height = 900, 600
@@ -62,6 +64,11 @@ while not game_close:
     food_x, food_y = random.randrange(0, width, snakeUnit), random.randrange(0, height, snakeUnit)
     snakeLength = 1
     snake = [[x, y]]
+    if os.path.exists('highscore.json'):
+        with open('highscore.json', 'r') as f:
+            highScore = json.load(f)['hs']
+    else:
+        highScore = 0
 
     # Game Loop
     while not game_close and not game_over:
@@ -90,7 +97,10 @@ while not game_close:
         # Eat Food
         if x == food_x and y == food_y:
             snakeLength += 1
-            food_x, food_y = random.randrange(0, width, snakeUnit), random.randrange(0, height, snakeUnit)
+            while True:
+                food_x, food_y = random.randrange(0, width, snakeUnit), random.randrange(0, height, snakeUnit)
+                if [food_x, food_y] not in snake and food_x != x and food_y != y:
+                    break
         # Tail Death
         if [x, y] in snake and len(snake) > 1:
             game_over = True
@@ -105,6 +115,9 @@ while not game_close:
             pygame.draw.rect(screen, green, [s[0], s[1], snakeUnit, snakeUnit])
         pygame.draw.rect(screen, red, [food_x, food_y, snakeUnit, snakeUnit])
         message("Score: {}".format(snakeLength-1), 20, cyan, 50, 20)
+        message("High Score: {}".format(highScore), 20, cyan, 75, 50)
+        if snakeLength-1 > highScore:
+            highScore = snakeLength - 1
 
         # Refresh Game
         pygame.display.update()
@@ -130,4 +143,6 @@ while not game_close:
                         game_close = True
                     elif event.key == pygame.K_r:
                         game_over = False
+    with open('highscore.json', 'w') as f:
+        json.dump({'hs': highScore}, f)
 pygame.quit()
