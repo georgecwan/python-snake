@@ -115,7 +115,7 @@ while not game_close:
             pygame.draw.rect(screen, green, [s[0], s[1], snakeUnit, snakeUnit])
         pygame.draw.rect(screen, red, [food_x, food_y, snakeUnit, snakeUnit])
         message("Score: {}".format(snakeLength-1), 20, cyan, 50, 20)
-        message("High Score: {}".format(highScore), 20, cyan, 75, 50)
+        message("High Score: {}".format(highScore), 20, cyan, 80, 50)
         if snakeLength-1 > highScore:
             highScore = snakeLength - 1
 
