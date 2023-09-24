@@ -1,4 +1,5 @@
 # python-snake
+
 A simple snake game with Python.
 Uses WASD movement controls.
 
